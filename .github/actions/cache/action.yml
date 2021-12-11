@@ -1,0 +1,22 @@
+name: Retrieve Cache
+description: Retrieve Cache
+inputs:
+  key-prefix:
+    description: 'a prefix for key and restore-keys'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Cache
+      uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed # v2.1.7
+      with:
+        path: |
+          /root/.gradle/wrapper/dists
+          /root/.cargo
+          target
+          **/deps
+        key: ${{ inputs.key-prefix }}-${{ runner.os }}-${{ hashFiles('**/gradle-wrapper.properties') }}-${{ hashFiles('**/Cargo.lock') }}-${{ hashFiles('**/mix.lock') }}
+        restore-keys: |
+          ${{ inputs.key-prefix }}-${{ runner.os }}-${{ hashFiles('**/gradle-wrapper.properties') }}-${{ hashFiles('**/Cargo.lock') }}-
+          ${{ inputs.key-prefix }}-${{ runner.os }}-${{ hashFiles('**/gradle-wrapper.properties') }}-
+          ${{ inputs.key-prefix }}-${{ runner.os }}-

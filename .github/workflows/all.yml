@@ -1,4 +1,4 @@
-name: Elixir
+name: All Implementations
 
 permissions:
   contents: read
@@ -8,29 +8,13 @@ on:
   pull_request:
     paths:
       - '.github/actions/cache'
-      - '.github/workflows/elixir.yml'
-      - '**.ex'
-      - '**.exs'
-      - '**/mix.lock'
-      - 'implementations/elixir/ockam/ockam_vault_software/priv/**'
-      - 'implementations/elixir/ockam/ockam_vault_software/native/**'
-      - '**.rs'
-      - '**.toml'
-      - '**/Cargo.lock'
+      - '.github/workflows/all.yml'
   push:
     paths:
       - '.github/actions/cache'
-      - '.github/workflows/elixir.yml'
-      - '**.ex'
-      - '**.exs'
-      - '**/mix.lock'
-      - 'implementations/elixir/ockam/ockam_vault_software/priv/**'
-      - 'implementations/elixir/ockam/ockam_vault_software/native/**'
-      - '**.rs'
-      - '**.toml'
-      - '**/Cargo.lock'
+      - '.github/workflows/all.yml'
   schedule:
-    - cron:  '0 1 * * *' # Run every day at 1am UTC cron.help/#0_1_*_*_*
+    - cron:  '0 1 * * *' # Run every day at 1am UTC https://cron.help/#0_1_*_*_*
 
 jobs:
   build:
@@ -44,9 +28,9 @@ jobs:
       - name: Retrieve Cache
         uses: ./.github/actions/cache
         with:
-          key-prefix: elixir_test
-      - name: Build Elixir
-        run: ./gradlew build_elixir
+          key-prefix: build_test
+      - name: Build
+        run: ./gradlew build
 
   test:
     name: Test
@@ -59,6 +43,6 @@ jobs:
       - name: Retrieve Cache
         uses: ./.github/actions/cache
         with:
-          key-prefix: elixir_test
-      - name: Test Elixir
-        run: ./gradlew test_elixir
+          key-prefix: all_test
+      - name: Test
+        run: ./gradlew test
